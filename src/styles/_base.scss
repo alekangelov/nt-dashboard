@@ -220,3 +220,16 @@ p {
   grid-gap: 2rem;
   grid-template-rows: 1fr 1fr;
 }
+
+.copyright {
+  position: fixed;
+  bottom: 0;
+  right: 0;
+  color: white;
+  opacity: 0.2;
+  padding: 1rem;
+  p {
+    margin: 0;
+    font-size: 0.5rem;
+  }
+}

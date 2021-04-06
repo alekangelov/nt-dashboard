@@ -60,6 +60,12 @@ const AppSetup: React.FC<any> = () => {
 
 (AppSetup as any).whyDidYouRender = true;
 
+const Copyright = () => (
+  <div className="copyright">
+    <p>Copyright 2021 © Alek Angelov</p>
+  </div>
+);
+
 const SubApp = () => {
   return (
     <>
@@ -76,6 +82,7 @@ const SubApp = () => {
             </div>
           </div>
         </div>
+        <Copyright />
       </HashRouter>
     </>
   );
