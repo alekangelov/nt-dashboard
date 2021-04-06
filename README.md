@@ -31,4 +31,4 @@ and put the `build` folder in your chrome extensions as an unpacked extension.
 I plan on releasing this as a full on extension, just gotta figure out what
 people want to put in here. If you have something, open issues or contact me.
 
-### Alek Angelov
+Copyright 2021 Alek Angelov
