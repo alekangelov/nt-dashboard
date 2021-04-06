@@ -1,9 +1,8 @@
 {
-  "manifest_version": 2,
-
+  "manifest_version": 3,
   "name": "New Tab Dashboard",
   "description": "Everything you need at your fingertips!",
-  "version": "0.0.1",
+  "version": "1.0.0",
   "chrome_url_overrides": {
     "newtab": "index.html"
   },
@@ -13,5 +12,5 @@
     "128": "icon128.png",
     "512": "icon512.png"
   },
-  "permissions": ["storage", "bookmarks", "websockets"]
+  "permissions": ["storage", "bookmarks"]
 }

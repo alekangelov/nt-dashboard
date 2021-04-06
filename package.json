@@ -58,6 +58,7 @@
   "scripts": {
     "start": "react-scripts start",
     "build": "INLINE_RUNTIME_CHUNK=false && NODE_ENV=development && react-scripts build",
+    "prepare": "INLINE_RUNTIME_CHUNK=false && NODE_ENV=production && react-scripts build",
     "test": "react-scripts test",
     "dev": "concurrently \"yarn start\" \"yarn watch\"",
     "eject": "react-scripts eject",
