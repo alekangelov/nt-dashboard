@@ -1,0 +1,116 @@
+{
+  "name": "dashboard",
+  "version": "0.1.0",
+  "private": true,
+  "dependencies": {
+    "@react-spring/core": "^9.0.0",
+    "@react-spring/shared": "^9.0.0",
+    "@react-spring/web": "^9.0.0",
+    "@reecelucas/react-use-hotkeys": "^1.3.1",
+    "@testing-library/jest-dom": "^5.11.4",
+    "@testing-library/react": "^11.1.0",
+    "@testing-library/user-event": "^12.1.10",
+    "@types/chrome": "^0.0.133",
+    "@types/jest": "^26.0.15",
+    "@types/node": "^12.0.0",
+    "@types/ramda": "^0.27.39",
+    "@types/react": "^17.0.0",
+    "@types/react-dom": "^17.0.0",
+    "@types/react-router-dom": "^5.1.7",
+    "all-countries-and-cities-json": "^1.0.0",
+    "axios": "^0.21.1",
+    "clsx": "^1.1.1",
+    "crypto": "^1.0.1",
+    "csstype": "^3.0.7",
+    "dayjs": "^1.10.4",
+    "formik": "^2.2.6",
+    "merge-props": "^5.0.3",
+    "oauth-sign": "^0.9.0",
+    "query-string": "^7.0.0",
+    "ramda": "^0.27.1",
+    "react": "^17.0.2",
+    "react-custom-scrollbars": "^4.2.1",
+    "react-dom": "^17.0.2",
+    "react-merge-refs": "^1.1.0",
+    "react-redux": "^7.2.3",
+    "react-router-dom": "^5.2.0",
+    "react-scripts": "4.0.3",
+    "react-spring": "npm:@react-spring/web@9.0.0-rc.1",
+    "react-use-measure": "^2.0.4",
+    "redux": "^4.0.5",
+    "redux-persist": "^6.0.0",
+    "redux-thunk": "^2.3.0",
+    "typesafe-actions": "^5.1.0",
+    "web-vitals": "^1.0.1",
+    "yup": "^0.32.9"
+  },
+  "husky": {
+    "hooks": {
+      "pre-commit": "lint-staged"
+    }
+  },
+  "lint-staged": {
+    "src/**/*.{js,ts,tsx,scss}": [
+      "eslint",
+      "pretty-quick --staged"
+    ]
+  },
+  "scripts": {
+    "start": "react-scripts start",
+    "build": "INLINE_RUNTIME_CHUNK=false && NODE_ENV=development && react-scripts build",
+    "test": "react-scripts test",
+    "dev": "concurrently \"yarn start\" \"yarn watch\"",
+    "eject": "react-scripts eject",
+    "lint": "eslint  --fix --ext js,ts,tsx src",
+    "format": "prettier --config ./.prettierrc --write .",
+    "watch": "INLINE_RUNTIME_CHUNK=false && NODE_ENV=development && cra-build-watch"
+  },
+  "eslintConfig": {
+    "extends": [
+      "react-app",
+      "react-app/jest"
+    ]
+  },
+  "browserslist": {
+    "production": [
+      ">0.2%",
+      "not dead",
+      "not op_mini all"
+    ],
+    "development": [
+      "last 1 chrome version",
+      "last 1 firefox version",
+      "last 1 safari version"
+    ]
+  },
+  "devDependencies": {
+    "@welldone-software/why-did-you-render": "^6.1.1",
+    "typescript": "^4.1.2",
+    "eslint-config-airbnb-typescript": "^12.3.1",
+    "@types/crypto-js": "^4.0.1",
+    "@types/react-custom-scrollbars": "^4.0.7",
+    "@typescript-eslint/eslint-plugin": "^4.20.0",
+    "@typescript-eslint/parser": "^4.20.0",
+    "babel-eslint": "^10.1.0",
+    "concurrently": "^6.0.0",
+    "cra-build-watch": "^3.4.0",
+    "eslint": "^7.23.0",
+    "eslint-config-airbnb": "^18.2.1",
+    "eslint-config-prettier": "^8.1.0",
+    "eslint-plugin-compat": "^3.9.0",
+    "eslint-plugin-cypress": "^2.11.2",
+    "eslint-plugin-import": "^2.22.1",
+    "eslint-plugin-jest": "^24.3.2",
+    "eslint-plugin-jsx-a11y": "^6.4.1",
+    "eslint-plugin-prettier": "^3.3.1",
+    "eslint-plugin-react": "^7.23.1",
+    "eslint-plugin-react-hooks": "^4.2.0",
+    "husky": "^6.0.0",
+    "lint-staged": "^10.5.4",
+    "prettier": "^2.2.1",
+    "sass": "^1.32.8",
+    "stylelint": "^13.12.0",
+    "stylelint-prettier": "^1.2.0",
+    "stylelint-scss": "^3.19.0"
+  }
+}

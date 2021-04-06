@@ -1,0 +1,106 @@
+body.theme-light {
+  color: black;
+  background: white;
+  .background-overlay {
+    background: white;
+  }
+  h1,
+  h2,
+  span,
+  p {
+    color: black;
+  }
+  .search-bar {
+    &__real {
+      color: black;
+      background: rgba(black, 0.1);
+      border-color: rgba(black, 0.2);
+    }
+  }
+  .sidebar-inner {
+    border-color: rgba(black, 0.2);
+  }
+  .modal {
+    background: rgba(white, 0.5);
+    &-body {
+      background: rgba(white, 1);
+      border: 1px solid rgba(0, 0, 0, 0.2);
+    }
+  }
+  .btn {
+    svg {
+      * {
+        fill: black;
+      }
+    }
+    &-default {
+      border-color: rgba(black, 0.2);
+      color: black;
+    }
+  }
+  .form {
+    color: black;
+    &-control {
+      &__input {
+        background: rgba(black, 0.05);
+        border-color: rgba(black, 0.2);
+      }
+      &__select {
+        color: black;
+        background: rgba(white, 0.8);
+        border: 1px solid rgba(black, 0.2);
+        &__single {
+          color: black;
+          background: rgba(black, 0.2);
+        }
+      }
+      .switch {
+        &-track {
+          background: rgba(black, 0.2);
+        }
+        &.on {
+          .switch-thumb {
+            background: black;
+          }
+        }
+      }
+      label,
+      input {
+        color: black;
+      }
+      &__input {
+        color: black;
+      }
+      &__label {
+        color: black;
+      }
+      * {
+      }
+    }
+  }
+  .form-control__select--single + .form-control__select--single {
+    border-top: 1px solid rgba(black, 0.2);
+  }
+  .scrollbars-thumb {
+    background: rgba(black, 0.8);
+  }
+  .page-header {
+    border-bottom: 1px solid rgba(black, 0.2);
+  }
+  .todos {
+    &-single {
+      background: rgba(black, 0.05);
+      border-color: rgba(black, 0.2);
+    }
+  }
+  .checkbox {
+    background: rgba(black, 0.2);
+    border-color: rgba(black, 0.2);
+    svg path {
+      fill: white;
+    }
+  }
+  .btn-default:hover {
+    background: rgba(black, 0.05);
+  }
+}
