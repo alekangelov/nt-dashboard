@@ -1,0 +1,23 @@
+{
+  "files": {
+    "main.css": "/static/css/main.ec5a5bb8.chunk.css",
+    "main.js": "/static/js/main.98fc3a42.chunk.js",
+    "main.js.map": "/static/js/main.98fc3a42.chunk.js.map",
+    "runtime-main.js": "/static/js/runtime-main.3dcc236d.js",
+    "runtime-main.js.map": "/static/js/runtime-main.3dcc236d.js.map",
+    "static/js/2.f539ff5a.chunk.js": "/static/js/2.f539ff5a.chunk.js",
+    "static/js/2.f539ff5a.chunk.js.map": "/static/js/2.f539ff5a.chunk.js.map",
+    "static/js/3.0f48c0f3.chunk.js": "/static/js/3.0f48c0f3.chunk.js",
+    "static/js/3.0f48c0f3.chunk.js.map": "/static/js/3.0f48c0f3.chunk.js.map",
+    "index.html": "/index.html",
+    "static/css/main.ec5a5bb8.chunk.css.map": "/static/css/main.ec5a5bb8.chunk.css.map",
+    "static/js/2.f539ff5a.chunk.js.LICENSE.txt": "/static/js/2.f539ff5a.chunk.js.LICENSE.txt",
+    "static/media/index.scss": "/static/media/Mulish-SemiBoldItalic.d247e6f2.woff2"
+  },
+  "entrypoints": [
+    "static/js/runtime-main.3dcc236d.js",
+    "static/js/2.f539ff5a.chunk.js",
+    "static/css/main.ec5a5bb8.chunk.css",
+    "static/js/main.98fc3a42.chunk.js"
+  ]
+}
