@@ -1,5 +1,7 @@
 # Alek's New Tab Dashboard
 
+![Screenshot of the Dashboard](https://i.imgur.com/OPTGFGV.png)
+
 So, this is a project I've been wanting to do for a while, but never really got
 the time to do it. Well, I decided to make time and to do and open source.
 Plenty of things left to do, but I made some architectural decisions that should
