@@ -1,8 +1,12 @@
 import axios from 'axios';
 import { useEffect } from 'react';
-import { APP_ID, CONSUMER_KEY, CONSUMER_SECRET, URL } from '../OAuthHelper';
 import useAxios from './useAxios';
 import oauthInterceptor from '../interceptors/oauthInterceptor';
+
+export const CONSUMER_SECRET = process.env.REACT_APP_CONSUMER_SECRET;
+export const CONSUMER_KEY = process.env.REACT_APP_CONSUMER_KEY;
+export const URL = `https://weather-ydn-yql.media.yahoo.com/forecastrss`;
+export const APP_ID = 'pwfhq4rQ';
 
 const weatherAxios = axios.create();
 

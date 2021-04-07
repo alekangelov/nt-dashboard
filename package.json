@@ -64,7 +64,8 @@
     "eject": "react-scripts eject",
     "lint": "eslint  --fix --ext js,ts,tsx src",
     "format": "prettier --config ./.prettierrc --write .",
-    "watch": "INLINE_RUNTIME_CHUNK=false && NODE_ENV=development && cra-build-watch"
+    "watch": "INLINE_RUNTIME_CHUNK=false && NODE_ENV=development && cra-build-watch",
+    "deploy": "yarn prepare && gh-pages -d build"
   },
   "eslintConfig": {
     "extends": [
@@ -85,18 +86,17 @@
     ]
   },
   "devDependencies": {
-    "@welldone-software/why-did-you-render": "^6.1.1",
-    "typescript": "^4.1.2",
-    "eslint-config-airbnb-typescript": "^12.3.1",
     "@types/crypto-js": "^4.0.1",
     "@types/react-custom-scrollbars": "^4.0.7",
     "@typescript-eslint/eslint-plugin": "^4.20.0",
     "@typescript-eslint/parser": "^4.20.0",
+    "@welldone-software/why-did-you-render": "^6.1.1",
     "babel-eslint": "^10.1.0",
     "concurrently": "^6.0.0",
     "cra-build-watch": "^3.4.0",
     "eslint": "^7.23.0",
     "eslint-config-airbnb": "^18.2.1",
+    "eslint-config-airbnb-typescript": "^12.3.1",
     "eslint-config-prettier": "^8.1.0",
     "eslint-plugin-compat": "^3.9.0",
     "eslint-plugin-cypress": "^2.11.2",
@@ -106,12 +106,14 @@
     "eslint-plugin-prettier": "^3.3.1",
     "eslint-plugin-react": "^7.23.1",
     "eslint-plugin-react-hooks": "^4.2.0",
+    "gh-pages": "^3.1.0",
     "husky": "^6.0.0",
     "lint-staged": "^10.5.4",
     "prettier": "^2.2.1",
     "sass": "^1.32.8",
     "stylelint": "^13.12.0",
     "stylelint-prettier": "^1.2.0",
-    "stylelint-scss": "^3.19.0"
+    "stylelint-scss": "^3.19.0",
+    "typescript": "^4.1.2"
   }
 }
