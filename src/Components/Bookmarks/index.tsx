@@ -87,7 +87,7 @@ const Bookmarks: React.FC<any> = () => {
     );
   }
   return (
-    <Formik initialValues={{ search: '' }} onSubmit={(e) => console.log(e)}>
+    <Formik initialValues={{ search: '' }} onSubmit={() => {}}>
       <Form style={{ height: '100%' }}>
         <div className="page bookmarks">
           <div className="page-header bookmarks-header">

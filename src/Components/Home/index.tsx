@@ -4,7 +4,7 @@ import Favicons from '../Favicons';
 import SearchBar from '../Search';
 import Weather from '../Weather';
 
-const Home = () => {
+const Home = (): React.ReactElement => {
   return (
     <div className="homepage">
       <div className="search">

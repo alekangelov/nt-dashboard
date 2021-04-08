@@ -12,12 +12,7 @@ import {
   changeTodo,
 } from '../actions/rootActions';
 import FavoriteModel from '../models/FavoriteModel';
-import {
-  changeFromListWhereId,
-  removeFromArrayWhere,
-  removeFromListWhereId,
-} from '../../../utils';
-import TodoList from '../../../../Components/TodoList';
+import { changeFromListWhereId } from '../../../utils';
 
 const initialState: IState = {
   settings: {

@@ -13,7 +13,6 @@ import {
   mergeAll,
   propEq,
   prop,
-  findIndex,
   equals,
   where,
   ifElse,

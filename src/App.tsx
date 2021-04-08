@@ -46,7 +46,7 @@ const AppSetup: React.FC<any> = () => {
         window.chrome.bookmarks.getTree((e) => addBookmarks(e));
       }
     } catch (e) {
-      console.error(e);
+      console.log('bookmarks not found');
     }
     // eslint-disable-next-line
   }, []);

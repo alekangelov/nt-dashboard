@@ -7,7 +7,6 @@ const Weather: React.FC<any> = () => {
     current_observation: currentObservation,
     forecasts,
   } = useRootSelector(({ weather }) => weather);
-  console.log({ location, currentObservation, forecasts });
   if (!forecasts || !forecasts.length) {
     return null;
   }
