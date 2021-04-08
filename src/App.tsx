@@ -58,7 +58,7 @@ const AppSetup: React.FC<any> = () => {
   return null;
 };
 
-(AppSetup as any).whyDidYouRender = true;
+// (AppSetup as any).whyDidYouRender = true;
 
 const Copyright = () => (
   <div className="copyright">

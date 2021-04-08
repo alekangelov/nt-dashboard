@@ -3,20 +3,15 @@ import { useField, useFormikContext } from 'formik';
 import mergeProps from 'merge-props';
 import { useSpring, animated } from '@react-spring/web';
 import clsx from 'clsx';
-import { getValuesFromOption, makeid } from '../../lib/utils';
-import Custombars from '../Custombars';
-import { delay } from '../../lib/libhelpers';
+import { makeid } from '../../lib/utils';
 import CheckIcon from '../../Icons/CheckIcon';
 
 interface TextInputProps extends React.InputHTMLAttributes<HTMLInputElement> {
   label: string;
 }
 
-export const TextInput: React.FC<TextInputProps> = ({
-  label,
-  name = '',
-  ...rest
-}) => {
+const TextInput: React.FC<TextInputProps> = ({ label, name = '', ...rest }) => {
+  console.log('TEXTINPUT');
   const id = React.useRef(makeid(5));
   const [isFocused, setIsFocused] = React.useState<boolean>(false);
   const [field, meta] = useField(name);
@@ -76,10 +71,10 @@ export interface Option {
 
 interface SelectInputProps extends React.InputHTMLAttributes<HTMLInputElement> {
   label: string;
-  options?: Option[] | null;
+  options: Option[];
 }
 
-export const SelectInput: React.FC<SelectInputProps> = ({
+const SelectInput: React.FC<SelectInputProps> = ({
   label,
   name = '',
   disabled,
@@ -87,9 +82,7 @@ export const SelectInput: React.FC<SelectInputProps> = ({
   ...rest
 }) => {
   const id = React.useRef(makeid(5));
-
   const [isFocused, setIsFocused] = React.useState<boolean>(false);
-
   const [field, meta] = useField(name);
   return (
     <div
@@ -100,37 +93,6 @@ export const SelectInput: React.FC<SelectInputProps> = ({
       )}
     >
       <div className="form-control__inner">
-        {Boolean(options) && (
-          <div className={clsx('form-control__select', !isFocused && 'hide')}>
-            <Custombars autoHeight autoHeightMin={125}>
-              {options?.map((e) => {
-                if (
-                  field.value &&
-                  (!e.value.toLowerCase().includes(field.value.toLowerCase()) ||
-                    !e.label
-                      .toLowerCase()
-                      .includes(field.value.toLowerCase())) &&
-                  !getValuesFromOption(options).includes(field.value)
-                ) {
-                  return null;
-                }
-                return (
-                  <div
-                    role="button"
-                    tabIndex={-1}
-                    onClick={() => {
-                      field.onChange(name)(e.value);
-                    }}
-                    key={e.value}
-                    className="form-control__select--single"
-                  >
-                    {e.label}
-                  </div>
-                );
-              })}
-            </Custombars>
-          </div>
-        )}
         <label
           className={clsx(
             'form-control__label',
@@ -140,36 +102,23 @@ export const SelectInput: React.FC<SelectInputProps> = ({
         >
           {label}
         </label>
-        <label
-          className={clsx(
-            'form-control__placeholder',
-            Boolean(field.value || !isFocused) && 'hide',
-          )}
-          htmlFor={id.current}
-        >
-          {rest.placeholder}
-        </label>
-        <input
-          {...mergeProps(field, rest, {
-            onBlur: () => {
-              delay(0.1).then(() => setIsFocused(false));
-            },
+        <select
+          {...mergeProps(field, {
+            onBlur: () => setIsFocused(false),
+            onFocus: () => setIsFocused(true),
           })}
-          value={
-            // eslint-disable-next-line
-            options
-              ? getValuesFromOption(options as any).includes(field.value)
-                ? options?.filter((e) => e.value === field.value)[0].label
-                : field.value
-              : field.value
-          }
-          onFocus={() => {
-            setIsFocused(true);
-          }}
           className="form-control__input"
-          placeholder=""
           id={id.current}
-        />
+        >
+          <option value=""> </option>
+          {options.map((e) =>
+            e ? (
+              <option key={e.value} value={e.value}>
+                {e.label}
+              </option>
+            ) : null,
+          )}
+        </select>
       </div>
       {Boolean(meta.touched && meta.error) && (
         <div className="form-control__error">
@@ -180,6 +129,8 @@ export const SelectInput: React.FC<SelectInputProps> = ({
   );
 };
 
+(SelectInput as any).whyDidYouRender = true;
+
 interface SliderProps extends React.InputHTMLAttributes<HTMLInputElement> {
   min: number;
   max: number;
@@ -187,12 +138,7 @@ interface SliderProps extends React.InputHTMLAttributes<HTMLInputElement> {
   name: string;
 }
 
-export const SliderInput: React.FC<SliderProps> = ({
-  label,
-  min,
-  max,
-  name,
-}) => {
+const SliderInput: React.FC<SliderProps> = ({ label, min, max, name }) => {
   const id = React.useRef(makeid(5));
   const [field, meta] = useField(name);
 
@@ -225,12 +171,7 @@ interface SwitchProps extends React.InputHTMLAttributes<HTMLInputElement> {
   name: string;
 }
 
-export const SwitchInput: React.FC<SwitchProps> = ({
-  label,
-  off,
-  on,
-  name,
-}) => {
+const SwitchInput: React.FC<SwitchProps> = ({ label, off, on, name }) => {
   const id = React.useRef(makeid(5));
   const [field, meta] = useField(name);
   return (
@@ -259,7 +200,7 @@ export const SwitchInput: React.FC<SwitchProps> = ({
   );
 };
 
-export const FormButtons: React.FC<any> = () => {
+const FormButtons: React.FC<any> = () => {
   const formik = useFormikContext();
   return (
     <div className="form-buttons">
@@ -287,7 +228,7 @@ interface CheckboxProps
   initialValue: boolean;
 }
 
-export const Checkbox: React.FC<CheckboxProps> = ({
+const Checkbox: React.FC<CheckboxProps> = ({
   initialValue = false,
   onChange,
   name = '',
@@ -316,4 +257,13 @@ export const Checkbox: React.FC<CheckboxProps> = ({
       </animated.div>
     </div>
   );
+};
+
+export {
+  SelectInput,
+  SliderInput,
+  SwitchInput,
+  FormButtons,
+  Checkbox,
+  TextInput,
 };

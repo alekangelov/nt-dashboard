@@ -136,6 +136,11 @@
       font-family: Mulish;
       width: 100%;
       outline: none;
+      option {
+        color: white;
+        background: black;
+      }
+      -webkit-appearance: none;
       &::placeholder {
         color: $opaqueWhite;
       }

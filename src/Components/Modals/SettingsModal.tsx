@@ -38,6 +38,7 @@ const SettingsModal: React.FC<{ id: string }> = ({ id }) => {
   const settingsAction = useAction(changeSettings);
   const initialSettings = useRootSelector((state) => state.settings);
   const { closeModal } = useModalContext();
+  console.log('RERENDERED');
   return (
     <Modal id={id} title="Dashboard Settings">
       <Formik
@@ -55,6 +56,7 @@ const SettingsModal: React.FC<{ id: string }> = ({ id }) => {
           background: yup.object().shape({
             url: yup
               .string()
+              .url()
               .required(
                 'Hey, this is literally the main point of this whole thing.',
               ),
@@ -71,19 +73,15 @@ const SettingsModal: React.FC<{ id: string }> = ({ id }) => {
         }}
       >
         {(formik) => {
+          console.log('RERENDER3');
           return (
             <Form>
               <TextInput name="name" label="What's your name?" />
-              <SelectInput
-                name="country"
-                label="Choose your country"
-                options={countriesDataList}
-              />
-              <SelectInput
+              <TextInput name="country" label="Enter your country" />
+              <TextInput
                 disabled={!formik.values.country}
                 name="city"
-                label="Choose your city"
-                options={getCitiesDataList(formik.values.country)}
+                label="Enter your city"
               />
               <SwitchInput
                 label="Dark Theme?"
@@ -120,5 +118,7 @@ const SettingsModal: React.FC<{ id: string }> = ({ id }) => {
     </Modal>
   );
 };
+
+(SettingsModal as any).whyDidYouRender = true;
 
 export default SettingsModal;

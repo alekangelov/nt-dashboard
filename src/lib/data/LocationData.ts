@@ -1,5 +1,5 @@
 import countriesWithCities from 'all-countries-and-cities-json';
-import { map, path } from 'ramda';
+import { map, path, uniq } from 'ramda';
 import { getKeys } from '../utils';
 import { Option } from '../../Components/Form';
 
@@ -24,6 +24,6 @@ export const getCitiesFromCountry = (e: string): string[] => {
 };
 
 export const getCitiesDataList = (e: string): Option[] =>
-  arrayToDataList(getCitiesFromCountry(e) as any);
+  arrayToDataList(uniq(getCitiesFromCountry(e)) as any);
 
 export const countriesDataList = arrayToDataList(countries) as Option[];
