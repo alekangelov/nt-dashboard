@@ -2,6 +2,8 @@ import axios from 'axios';
 import { useEffect } from 'react';
 import useAxios from './useAxios';
 import oauthInterceptor from '../interceptors/oauthInterceptor';
+import useDeepEffect from './useDeepEffect';
+import { defaultToC, removeEmpty } from '../utils';
 
 export const CONSUMER_SECRET = process.env.REACT_APP_CONSUMER_SECRET;
 export const CONSUMER_KEY = process.env.REACT_APP_CONSUMER_KEY;
@@ -91,9 +93,11 @@ export declare namespace Weather {
   }
 
   export interface Request {
-    location: string;
+    location?: string;
     format: string;
     u: string;
+    lat?: number;
+    lon?: number;
   }
 }
 
@@ -103,9 +107,11 @@ export default function useWeather(
   const [state, get] = useAxios<Weather.Request, Weather.Response>(weatherApi, {
     loading: true,
   });
-  useEffect(() => {
-    get(props);
-    // eslint-disable-next-line
-  }, [props.location]);
+
+  useDeepEffect(() => {
+    if ((props.lat && props.lon) || props.location) {
+      get((removeEmpty({ ...props }) as unknown) as Weather.Request);
+    }
+  }, [props]);
   return state;
 }

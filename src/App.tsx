@@ -4,6 +4,7 @@ import { HashRouter } from 'react-router-dom';
 import { PersistGate } from 'redux-persist/integration/react';
 import Background from './Components/Background';
 import Sidebar from './Components/Sidebar';
+import { useAsyncGeo } from './lib/asyncGeo';
 import ModalProvider from './lib/global/ModalContext';
 import {
   changeBookmarks,
@@ -20,6 +21,7 @@ const { store, persistor } = settingsStore();
 const AppSetup: React.FC<any> = () => {
   const addBookmarks = useAction(changeBookmarks);
   const addWeather = useAction(changeWeather);
+  const geo = useAsyncGeo();
   const { city, degreeFormat, country, theme } = useRootSelector(
     ({ settings }) => ({
       city: settings.city,
@@ -29,7 +31,9 @@ const AppSetup: React.FC<any> = () => {
     }),
   );
   const state = useWeather({
-    location: `${city},${country}`,
+    lat: geo?.coords.latitude,
+    lon: geo?.coords.longitude,
+    location: city && country && `${city},${country}`,
     u: degreeFormat,
     format: 'json',
   });

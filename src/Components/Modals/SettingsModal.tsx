@@ -11,12 +11,7 @@ import {
 } from '../Form';
 import Modal from '../Modal';
 import { Settings } from '../../lib/global/redux/reducers/rootReducerTypes';
-import {
-  countries,
-  countriesDataList,
-  getCitiesDataList,
-  allCities,
-} from '../../lib/data/LocationData';
+
 import useAction from '../../lib/hooks/useAction';
 import { changeSettings } from '../../lib/global/redux/actions/rootActions';
 import { useModalContext } from '../../lib/global/ModalContext';
@@ -44,14 +39,6 @@ const SettingsModal: React.FC<{ id: string }> = ({ id }) => {
       <Formik
         validationSchema={yup.object().shape({
           name: yup.string().required('Gotta have a name.'),
-          city: yup
-            .string()
-            .required()
-            .oneOf(allCities, 'Please enter a valid city.'),
-          country: yup
-            .string()
-            .required()
-            .oneOf(countries, 'Please enter a valid country.'),
           theme: yup.string().required("I won't know what your preference is."),
           background: yup.object().shape({
             url: yup
@@ -77,12 +64,6 @@ const SettingsModal: React.FC<{ id: string }> = ({ id }) => {
           return (
             <Form>
               <TextInput name="name" label="What's your name?" />
-              <TextInput name="country" label="Enter your country" />
-              <TextInput
-                disabled={!formik.values.country}
-                name="city"
-                label="Enter your city"
-              />
               <SwitchInput
                 label="Dark Theme?"
                 off="light"

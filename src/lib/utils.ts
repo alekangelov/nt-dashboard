@@ -16,6 +16,8 @@ import {
   equals,
   where,
   ifElse,
+  propOr,
+  reject,
 } from 'ramda';
 
 export const omitChildren = omit(['children']);
@@ -63,3 +65,7 @@ export const getValuesFromOption = map(prop('value'));
 export const todosAreDone = filter(propEq('done', true));
 
 export const todosAreNotDone = filter(propEq('done', false));
+
+export const defaultToC = propOr('c', 'u');
+
+export const removeEmpty = reject(complement(Boolean));
