@@ -8,6 +8,7 @@ import {
   SelectInput,
   SliderInput,
   SwitchInput,
+  DropZoneInput,
 } from '../Form';
 import Modal from '../Modal';
 import { Settings } from '../../lib/global/redux/reducers/rootReducerTypes';
@@ -84,7 +85,10 @@ const SettingsModal: React.FC<{ id: string }> = ({ id }) => {
                   },
                 ]}
               />
-              <TextInput name="background.url" label="Background Image URL" />
+              <DropZoneInput
+                name="background.url"
+                label="Drop background image here, or click to browse"
+              />
               <SliderInput
                 min={0}
                 max={1}

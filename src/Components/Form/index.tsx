@@ -259,8 +259,62 @@ const Checkbox: React.FC<CheckboxProps> = ({
   );
 };
 
+interface DropZoneProps {
+  name: string;
+  label: string;
+}
+
+const DropZoneInput: React.FC<DropZoneProps> = ({ name, label }) => {
+  const id = React.useRef(makeid(5));
+  const [dragging, setDragging] = React.useState<boolean>(false);
+  const fieldRef = React.useRef<HTMLInputElement | null>(null);
+  const [field, meta] = useField(name);
+  return (
+    <div className="form-control dropzone">
+      <div
+        // htmlFor={id.current}
+        onClick={(e) => {
+          e.preventDefault();
+          e.stopPropagation();
+          fieldRef?.current?.click();
+        }}
+        role="button"
+        tabIndex={-1}
+        onDragOver={(e) => {
+          e.preventDefault();
+          setDragging(true);
+        }}
+        onDragEnter={(e) => {
+          e.preventDefault();
+          setDragging(true);
+        }}
+        onDragLeave={(e) => {
+          e.preventDefault();
+          setDragging(false);
+        }}
+        onDrop={(e) => {
+          e.preventDefault();
+          console.log(e);
+          setDragging(false);
+        }}
+        className={clsx('form-control__dropzone', dragging && 'dropping')}
+      >
+        {label}
+        <input
+          onClick={(e) => e.stopPropagation()}
+          id={id.current}
+          type="file"
+          ref={fieldRef}
+          className="form-control__dropzone__input"
+        />
+      </div>
+    </div>
+  );
+};
+
 export {
   SelectInput,
+  DropZoneInput,
   SliderInput,
   SwitchInput,
   FormButtons,

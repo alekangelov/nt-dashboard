@@ -10,6 +10,25 @@
   }
   &-control {
     margin-top: 2rem;
+    &.dropzone {
+      padding: 2rem;
+    }
+    &__dropzone {
+      padding: 2rem;
+      border: 1px dashed rgba(white, 0.1);
+      display: block;
+      margin: -2rem;
+      border-radius: 1rem;
+      @include transition(background border);
+      user-select: none;
+      &.dropping {
+        border: 1px dashed rgba(white, 0.25);
+        background: rgba(white, 0.1);
+      }
+      &__input {
+        display: none;
+      }
+    }
     &.disabled {
       opacity: 0.5;
       pointer-events: none;

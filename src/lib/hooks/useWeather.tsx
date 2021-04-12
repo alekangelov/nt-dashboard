@@ -1,9 +1,8 @@
 import axios from 'axios';
-import { useEffect } from 'react';
 import useAxios from './useAxios';
 import oauthInterceptor from '../interceptors/oauthInterceptor';
 import useDeepEffect from './useDeepEffect';
-import { defaultToC, removeEmpty } from '../utils';
+import { removeEmpty } from '../utils';
 
 export const CONSUMER_SECRET = process.env.REACT_APP_CONSUMER_SECRET;
 export const CONSUMER_KEY = process.env.REACT_APP_CONSUMER_KEY;
