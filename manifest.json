@@ -12,5 +12,5 @@
     "128": "icon128.png",
     "512": "icon512.png"
   },
-  "permissions": ["storage", "bookmarks"]
+  "permissions": ["storage", "unlimitedStorage", "bookmarks", "geolocation"]
 }
