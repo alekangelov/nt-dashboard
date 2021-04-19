@@ -69,3 +69,19 @@ export const todosAreNotDone = filter(propEq('done', false));
 export const defaultToC = propOr('c', 'u');
 
 export const removeEmpty = reject(complement(Boolean));
+
+export const fileToDataUrl = (file: File): Promise<string> =>
+  // eslint-disable-next-line
+  new Promise(async (resolve, rej) => {
+    const blob = new Blob([new Uint8Array(await file.arrayBuffer())], {
+      type: file.type,
+    });
+    const reader = new FileReader();
+    reader.readAsDataURL(blob);
+    reader.onloadend = function () {
+      resolve(reader.result as string);
+    };
+    reader.onerror = function (error) {
+      rej(error);
+    };
+  });

@@ -3,7 +3,7 @@ import { useField, useFormikContext } from 'formik';
 import mergeProps from 'merge-props';
 import { useSpring, animated } from '@react-spring/web';
 import clsx from 'clsx';
-import { makeid } from '../../lib/utils';
+import { fileToDataUrl, makeid } from '../../lib/utils';
 import CheckIcon from '../../Icons/CheckIcon';
 
 interface TextInputProps extends React.InputHTMLAttributes<HTMLInputElement> {
@@ -269,6 +269,7 @@ const DropZoneInput: React.FC<DropZoneProps> = ({ name, label }) => {
   const [dragging, setDragging] = React.useState<boolean>(false);
   const fieldRef = React.useRef<HTMLInputElement | null>(null);
   const [field, meta] = useField(name);
+  const changeFile = (file: string) => field.onChange(name)(file);
   return (
     <div className="form-control dropzone">
       <div
@@ -292,9 +293,9 @@ const DropZoneInput: React.FC<DropZoneProps> = ({ name, label }) => {
           e.preventDefault();
           setDragging(false);
         }}
-        onDrop={(e) => {
+        onDrop={async (e) => {
           e.preventDefault();
-          console.log(e);
+          changeFile(await fileToDataUrl(e.dataTransfer.files[0]));
           setDragging(false);
         }}
         className={clsx('form-control__dropzone', dragging && 'dropping')}
@@ -302,11 +303,20 @@ const DropZoneInput: React.FC<DropZoneProps> = ({ name, label }) => {
         {label}
         <input
           onClick={(e) => e.stopPropagation()}
+          onChange={async (e) => {
+            changeFile(await fileToDataUrl((e.target.files as any)[0]));
+          }}
           id={id.current}
           type="file"
           ref={fieldRef}
           className="form-control__dropzone__input"
         />
+
+        {Boolean(field.value) && (
+          <div className="form-control__dropzone__preview">
+            <img src={field.value} alt="preview for the dropzone" />
+          </div>
+        )}
       </div>
     </div>
   );

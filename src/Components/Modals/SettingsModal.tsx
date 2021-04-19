@@ -34,24 +34,19 @@ const SettingsModal: React.FC<{ id: string }> = ({ id }) => {
   const settingsAction = useAction(changeSettings);
   const initialSettings = useRootSelector((state) => state.settings);
   const { closeModal } = useModalContext();
-  console.log('RERENDERED');
   return (
     <Modal id={id} title="Dashboard Settings">
       <Formik
         validationSchema={yup.object().shape({
-          name: yup.string().required('Gotta have a name.'),
-          theme: yup.string().required("I won't know what your preference is."),
+          name: yup.string(),
+          theme: yup.string(),
           background: yup.object().shape({
-            url: yup
-              .string()
-              .url()
-              .required(
-                'Hey, this is literally the main point of this whole thing.',
-              ),
-            opacity: yup.number().required().min(0).max(1),
+            url: yup.string(),
+            opacity: yup.number().min(0).max(1),
           }),
         })}
         onSubmit={(e) => {
+          console.log(e, 'events');
           settingsAction(e);
           closeModal();
         }}
@@ -61,7 +56,6 @@ const SettingsModal: React.FC<{ id: string }> = ({ id }) => {
         }}
       >
         {(formik) => {
-          console.log('RERENDER3');
           return (
             <Form>
               <TextInput name="name" label="What's your name?" />

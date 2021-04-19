@@ -28,6 +28,20 @@
       &__input {
         display: none;
       }
+<<<<<<< HEAD
+=======
+      &__preview {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        img {
+          width: auto;
+          max-width: 100%;
+          margin-top: 2rem;
+          border-radius: 1rem;
+        }
+      }
+>>>>>>> Dashboard v1.0.3
     }
     &.disabled {
       opacity: 0.5;

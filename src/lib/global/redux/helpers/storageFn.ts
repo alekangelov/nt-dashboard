@@ -1,5 +1,5 @@
 function ChromeStorage() {
-  const storage = chrome.storage.sync;
+  const storage = chrome.storage.local;
   return {
     getItem: (key: string): Promise<string> => {
       return new Promise((resolve) => {
