@@ -73,6 +73,7 @@ export const removeEmpty = reject(complement(Boolean));
 export const fileToDataUrl = (file: File): Promise<string> =>
   // eslint-disable-next-line
   new Promise(async (resolve, rej) => {
+    if (!file) rej();
     const blob = new Blob([new Uint8Array(await file.arrayBuffer())], {
       type: file.type,
     });
@@ -85,3 +86,5 @@ export const fileToDataUrl = (file: File): Promise<string> =>
       rej(error);
     };
   });
+
+export const byteSize = (str: string) => new Blob([str]).size;

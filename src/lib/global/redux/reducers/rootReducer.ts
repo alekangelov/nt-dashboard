@@ -55,13 +55,10 @@ const rootReducer = createReducer<IState, AllActions>(initialState)
     };
   })
   .handleAction(changeSettings, (state, action) => {
-<<<<<<< HEAD
-=======
     console.log({
       ...state,
       settings: action.payload,
     });
->>>>>>> Dashboard v1.0.3
     return {
       ...state,
       settings: action.payload,

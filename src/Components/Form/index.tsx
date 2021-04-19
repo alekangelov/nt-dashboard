@@ -318,6 +318,11 @@ const DropZoneInput: React.FC<DropZoneProps> = ({ name, label }) => {
           </div>
         )}
       </div>
+      {Boolean(meta.touched && meta.error) && (
+        <div className="form-control__error">
+          <span>{meta.error}</span>
+        </div>
+      )}
     </div>
   );
 };

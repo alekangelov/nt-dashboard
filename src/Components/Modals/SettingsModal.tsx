@@ -17,6 +17,7 @@ import useAction from '../../lib/hooks/useAction';
 import { changeSettings } from '../../lib/global/redux/actions/rootActions';
 import { useModalContext } from '../../lib/global/ModalContext';
 import { useRootSelector } from '../../lib/global/redux/reducers';
+import { byteSize } from '../../lib/utils';
 
 const initialValues: Settings = {
   name: '',
@@ -41,7 +42,10 @@ const SettingsModal: React.FC<{ id: string }> = ({ id }) => {
           name: yup.string(),
           theme: yup.string(),
           background: yup.object().shape({
-            url: yup.string(),
+            url: yup.string().test('len', 'Maximum size is 1MB', (val = '') => {
+              console.log(byteSize(val));
+              return byteSize(val) <= 1000000;
+            }),
             opacity: yup.number().min(0).max(1),
           }),
         })}
