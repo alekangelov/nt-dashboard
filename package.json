@@ -62,7 +62,7 @@
   "scripts": {
     "start": "react-scripts start",
     "build": "INLINE_RUNTIME_CHUNK=false && NODE_ENV=development && react-scripts build",
-    "prepare": "INLINE_RUNTIME_CHUNK=false && NODE_ENV=production && react-scripts build",
+    "prepare": "INLINE_RUNTIME_CHUNK=false && NODE_ENV=production && react-scripts build && node ./postPrepare.js",
     "test": "react-scripts test",
     "dev": "concurrently \"yarn start\" \"yarn watch\"",
     "eject": "react-scripts eject",
@@ -97,6 +97,7 @@
     "@typescript-eslint/parser": "^4.20.0",
     "@welldone-software/why-did-you-render": "^6.1.1",
     "babel-eslint": "^10.1.0",
+    "bestzip": "^2.2.0",
     "concurrently": "^6.0.0",
     "cra-build-watch": "^3.4.0",
     "eslint": "^7.23.0",
