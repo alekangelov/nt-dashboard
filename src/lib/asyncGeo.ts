@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 
-export default async function asyncGeo() {
+export default async function asyncGeo(): Promise<GeolocationPosition> {
   return new Promise<GeolocationPosition>((resolve, reject) => {
     return window.navigator.geolocation.getCurrentPosition(
       (e) => resolve(e),
@@ -9,7 +9,7 @@ export default async function asyncGeo() {
   });
 }
 
-export function useAsyncGeo() {
+export function useAsyncGeo(): GeolocationPosition | null {
   const [state, setState] = useState<GeolocationPosition | null>(null);
   useEffect(() => {
     asyncGeo().then((e) => {

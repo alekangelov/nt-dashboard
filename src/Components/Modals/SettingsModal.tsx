@@ -17,13 +17,14 @@ import useAction from '../../lib/hooks/useAction';
 import { changeSettings } from '../../lib/global/redux/actions/rootActions';
 import { useModalContext } from '../../lib/global/ModalContext';
 import { useRootSelector } from '../../lib/global/redux/reducers';
-import { byteSize } from '../../lib/utils';
+import { byteSize, parseBool } from '../../lib/utils';
 
 const initialValues: Settings = {
   name: '',
   city: '',
   country: '',
-  theme: 'dark',
+  systemTheme: 'true',
+  theme: undefined,
   degreeFormat: '',
   background: {
     url: '',
@@ -43,14 +44,12 @@ const SettingsModal: React.FC<{ id: string }> = ({ id }) => {
           theme: yup.string(),
           background: yup.object().shape({
             url: yup.string().test('len', 'Maximum size is 1MB', (val = '') => {
-              console.log(byteSize(val));
               return byteSize(val) <= 1000000;
             }),
             opacity: yup.number().min(0).max(1),
           }),
         })}
         onSubmit={(e) => {
-          console.log(e, 'events');
           settingsAction(e);
           closeModal();
         }}
@@ -64,11 +63,19 @@ const SettingsModal: React.FC<{ id: string }> = ({ id }) => {
             <Form>
               <TextInput name="name" label="What's your name?" />
               <SwitchInput
-                label="Dark Theme?"
-                off="light"
-                on="dark"
-                name="theme"
+                label="Use system theme?"
+                off="false"
+                on="true"
+                name="systemTheme"
               />
+              {!parseBool(formik.values.systemTheme) && (
+                <SwitchInput
+                  label="Dark Theme?"
+                  off="light"
+                  on="dark"
+                  name="theme"
+                />
+              )}
               <SelectInput
                 name="degreeFormat"
                 label="Pick a format for the degrees"

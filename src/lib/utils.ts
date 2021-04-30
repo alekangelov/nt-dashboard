@@ -79,12 +79,15 @@ export const fileToDataUrl = (file: File): Promise<string> =>
     });
     const reader = new FileReader();
     reader.readAsDataURL(blob);
-    reader.onloadend = function () {
+    reader.onloadend = () => {
       resolve(reader.result as string);
     };
-    reader.onerror = function (error) {
+    reader.onerror = (error) => {
       rej(error);
     };
   });
 
 export const byteSize = (str: string) => new Blob([str]).size;
+
+export const parseBool = (str: any = 'FALSE') =>
+  typeof str === 'string' ? str.toUpperCase() === 'TRUE' : Boolean(str);

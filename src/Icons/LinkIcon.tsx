@@ -1,6 +1,6 @@
 import * as React from 'react';
 
-function LinkIcon(props: React.SVGProps<SVGSVGElement>) {
+function LinkIcon(props: React.SVGProps<SVGSVGElement>): React.ReactElement {
   return (
     <svg
       width="1em"

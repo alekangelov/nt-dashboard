@@ -13,13 +13,13 @@ const useKeys = (props: {
   push: (path: string, state?: unknown) => void;
   settings: (e: React.MouseEvent<Element, MouseEvent>) => any;
 }) => {
-  const hotKeyBookmarks = useHotkeys('Control+Alt+b', function () {
+  useHotkeys('Control+Alt+b', () => {
     props.push('/bookmarks');
   });
-  const hotKeyTodos = useHotkeys('Control+Alt+t', function () {
+  useHotkeys('Control+Alt+t', () => {
     props.push('/todos');
   });
-  const hotKeySettings = useHotkeys('Control+Alt+s', function () {
+  useHotkeys('Control+Alt+s', () => {
     props.settings({ preventDefautl: () => {} } as any);
   });
 };

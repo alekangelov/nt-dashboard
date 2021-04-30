@@ -10,7 +10,6 @@ import {
 import { useRootSelector } from '../../lib/global/redux/reducers';
 import { Todo } from '../../lib/global/redux/reducers/rootReducerTypes';
 import useAction from '../../lib/hooks/useAction';
-import { todosAreDone, todosAreNotDone } from '../../lib/utils';
 import Custombars from '../Custombars';
 import { Checkbox } from '../Form';
 import { IconButton } from '../helpers';

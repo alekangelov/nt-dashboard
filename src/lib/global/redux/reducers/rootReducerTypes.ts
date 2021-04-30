@@ -48,7 +48,8 @@ export interface Settings {
   name: string;
   city: string;
   country: string;
-  theme: 'light' | 'dark';
+  systemTheme: 'true' | 'false';
+  theme?: 'light' | 'dark';
   degreeFormat: string;
   background: {
     url?: string;

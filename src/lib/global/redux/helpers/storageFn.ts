@@ -17,7 +17,7 @@ function ChromeStorage() {
     },
     removeItem: (key: string): Promise<void> => {
       return new Promise((resolve) => {
-        storage.remove(key, function () {
+        storage.remove(key, () => {
           resolve();
         });
       });

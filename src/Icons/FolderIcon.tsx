@@ -4,7 +4,7 @@ interface FolderProps extends React.SVGProps<SVGSVGElement> {
   open: boolean;
 }
 
-function Folder({ open, ...props }: FolderProps) {
+function Folder({ open, ...props }: FolderProps): React.ReactElement {
   if (!open) {
     return (
       <svg

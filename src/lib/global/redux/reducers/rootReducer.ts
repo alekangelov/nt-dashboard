@@ -19,7 +19,8 @@ const initialState: IState = {
     name: '',
     city: '',
     country: '',
-    theme: 'dark',
+    systemTheme: 'true',
+    theme: undefined,
     degreeFormat: '',
     background: {
       url: '',
@@ -55,10 +56,6 @@ const rootReducer = createReducer<IState, AllActions>(initialState)
     };
   })
   .handleAction(changeSettings, (state, action) => {
-    console.log({
-      ...state,
-      settings: action.payload,
-    });
     return {
       ...state,
       settings: action.payload,

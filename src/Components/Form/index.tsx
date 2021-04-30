@@ -11,7 +11,6 @@ interface TextInputProps extends React.InputHTMLAttributes<HTMLInputElement> {
 }
 
 const TextInput: React.FC<TextInputProps> = ({ label, name = '', ...rest }) => {
-  console.log('TEXTINPUT');
   const id = React.useRef(makeid(5));
   const [isFocused, setIsFocused] = React.useState<boolean>(false);
   const [field, meta] = useField(name);
@@ -79,7 +78,7 @@ const SelectInput: React.FC<SelectInputProps> = ({
   name = '',
   disabled,
   options,
-  ...rest
+  // ...rest
 }) => {
   const id = React.useRef(makeid(5));
   const [isFocused, setIsFocused] = React.useState<boolean>(false);

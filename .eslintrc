@@ -37,6 +37,7 @@
     "@typescript-eslint/no-namespace": "off",
     "jsx-a11y/click-events-have-key-events": "off",
     "react/no-unescaped-entities": "off",
+    "@typescript-eslint/explicit-module-boundary-types": "off",
     "prettier/prettier": [
       "error",
       {

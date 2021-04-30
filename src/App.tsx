@@ -14,6 +14,7 @@ import { useRootSelector } from './lib/global/redux/reducers';
 import settingsStore from './lib/global/redux/settingsStore';
 import useAction from './lib/hooks/useAction';
 import useWeather from './lib/hooks/useWeather';
+import { parseBool } from './lib/utils';
 import Routes from './routes';
 
 const { store, persistor } = settingsStore();
@@ -22,12 +23,17 @@ const AppSetup: React.FC<any> = () => {
   const addBookmarks = useAction(changeBookmarks);
   const addWeather = useAction(changeWeather);
   const geo = useAsyncGeo();
-  const { city, degreeFormat, country, theme } = useRootSelector(
+  const getSystemTheme = () =>
+    window.matchMedia('(prefers-color-scheme: dark)').matches
+      ? 'dark'
+      : 'light';
+  const { city, degreeFormat, country, theme, systemTheme } = useRootSelector(
     ({ settings }) => ({
       city: settings.city,
       country: settings.country,
       degreeFormat: settings.degreeFormat,
       theme: settings.theme,
+      systemTheme: settings.systemTheme,
     }),
   );
   const state = useWeather({
@@ -49,15 +55,19 @@ const AppSetup: React.FC<any> = () => {
       if (window.chrome.bookmarks) {
         window.chrome.bookmarks.getTree((e) => addBookmarks(e));
       }
-    } catch (e) {
-      console.log('bookmarks not found');
-    }
+      // eslint-disable-next-line
+    } catch (e) {}
     // eslint-disable-next-line
   }, []);
   React.useEffect(() => {
-    document.body.classList.remove('theme-dark', 'theme-light');
-    document.body.classList.add(`theme-${theme}`);
-  }, [theme]);
+    if (parseBool(systemTheme)) {
+      document.body.classList.remove('theme-dark', 'theme-light');
+      document.body.classList.add(`theme-${getSystemTheme()}`);
+    } else {
+      document.body.classList.remove('theme-dark', 'theme-light');
+      document.body.classList.add(`theme-${theme}`);
+    }
+  }, [theme, systemTheme]);
 
   return null;
 };
