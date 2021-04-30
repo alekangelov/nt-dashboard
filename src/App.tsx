@@ -19,14 +19,35 @@ import Routes from './routes';
 
 const { store, persistor } = settingsStore();
 
+const doesUserPreferDark = () =>
+  window.matchMedia('(prefers-color-scheme: dark)');
+
+const darkOrLight = (bool: boolean) => (bool ? 'dark' : 'light');
+
+const useSystemTheme = () => {
+  const watchMediaRef = React.useRef(doesUserPreferDark());
+  const [state, setState] = React.useState<'dark' | 'light'>(
+    darkOrLight(watchMediaRef.current.matches),
+  );
+  React.useEffect(() => {
+    const currentWatch = watchMediaRef.current;
+    currentWatch.onchange = (event: MediaQueryListEvent) => {
+      if (event.target) {
+        setState(darkOrLight(event.matches));
+      }
+    };
+    return () => {
+      currentWatch.onchange = null;
+    };
+  }, []);
+  return state;
+};
+
 const AppSetup: React.FC<any> = () => {
   const addBookmarks = useAction(changeBookmarks);
   const addWeather = useAction(changeWeather);
   const geo = useAsyncGeo();
-  const getSystemTheme = () =>
-    window.matchMedia('(prefers-color-scheme: dark)').matches
-      ? 'dark'
-      : 'light';
+  const systemThemeState = useSystemTheme();
   const { city, degreeFormat, country, theme, systemTheme } = useRootSelector(
     ({ settings }) => ({
       city: settings.city,
@@ -62,12 +83,12 @@ const AppSetup: React.FC<any> = () => {
   React.useEffect(() => {
     if (parseBool(systemTheme)) {
       document.body.classList.remove('theme-dark', 'theme-light');
-      document.body.classList.add(`theme-${getSystemTheme()}`);
+      document.body.classList.add(`theme-${systemThemeState}`);
     } else {
       document.body.classList.remove('theme-dark', 'theme-light');
       document.body.classList.add(`theme-${theme}`);
     }
-  }, [theme, systemTheme]);
+  }, [theme, systemTheme, systemThemeState]);
 
   return null;
 };
