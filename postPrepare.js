@@ -3,12 +3,12 @@ const package = require('./package.json');
 const fs = require('fs');
 
 console.log('Zipping started:');
-const newPath = `./nt-dashboard_v${package.version}.zip`;
+const newPath = `nt-dashboard_v${package.version}.zip`;
 
 try {
   fs.unlinkSync(newPath);
   zip({
-    source: './build/*',
+    source: 'build/*',
     destination: newPath,
   })
     .then(function () {
