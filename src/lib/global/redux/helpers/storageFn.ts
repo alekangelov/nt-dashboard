@@ -1,5 +1,5 @@
 function ChromeStorage() {
-  const storage = chrome.storage.local;
+  const storage = chrome?.storage?.local;
   return {
     getItem: (key: string): Promise<string> => {
       return new Promise((resolve) => {
@@ -46,8 +46,12 @@ function LocalStorage() {
 }
 
 const storageFn = () => {
-  if (chrome?.storage?.sync) {
-    return ChromeStorage();
+  try {
+    if (window.chrome && window.chrome?.storage?.sync) {
+      return ChromeStorage();
+    }
+  } catch (e) {
+    return LocalStorage();
   }
   return LocalStorage();
 };
