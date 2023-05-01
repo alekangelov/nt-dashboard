@@ -1,43 +1,35 @@
 {
+  "env": {
+    "browser": true
+  },
   "extends": [
-    "airbnb-typescript",
-    "airbnb/hooks",
+    "eslint:recommended",
+    "airbnb-base",
+    "airbnb-typescript/base",
     "plugin:@typescript-eslint/recommended",
-    "plugin:jest/recommended",
-    "prettier",
-    "eslint-config-prettier",
+    "plugin:@typescript-eslint/recommended-requiring-type-checking",
+    "plugin:@typescript-eslint/strict",
+    "plugin:solid/typescript",
     "plugin:prettier/recommended"
   ],
-  "plugins": ["react", "@typescript-eslint", "jest"],
-  "env": {
-    "browser": true,
-    "es6": true,
-    "jest": true
-  },
-  "globals": {
-    "Atomics": "readonly",
-    "SharedArrayBuffer": "readonly"
-  },
   "parser": "@typescript-eslint/parser",
   "parserOptions": {
-    "ecmaFeatures": {
-      "jsx": true
-    },
-    "ecmaVersion": 2018,
-    "sourceType": "module",
-    "project": "./tsconfig.json"
+    "project": [
+      "./tsconfig.json"
+    ]
   },
+  "plugins": [
+    "@typescript-eslint",
+    "solid"
+  ],
   "rules": {
-    "linebreak-style": "off",
-    "@typescript-eslint/no-explicit-any": "off",
-    "import/prefer-default-export": "off",
-    "react/jsx-props-no-spreading": "off",
-    "react/destructuring-assignment": "off",
-    "react/prop-types": 0,
-    "@typescript-eslint/no-namespace": "off",
-    "jsx-a11y/click-events-have-key-events": "off",
-    "react/no-unescaped-entities": "off",
-    "@typescript-eslint/explicit-module-boundary-types": "off",
+    "import/extensions": [
+      "error",
+      "ignorePackages",
+      {
+        "": "never"
+      }
+    ]
     "prettier/prettier": [
       "error",
       {

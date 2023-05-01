@@ -1,29 +1,22 @@
 {
   "compilerOptions": {
-    "target": "es5",
-    "lib": [
-      "dom",
-      "dom.iterable",
-      "esnext"
-    ],
-    "allowJs": true,
-    "skipLibCheck": true,
-    "esModuleInterop": true,
-    "allowSyntheticDefaultImports": true,
     "strict": true,
-    "forceConsistentCasingInFileNames": true,
-    "module": "esnext",
+    "target": "ESNext",
+    "module": "ESNext",
     "moduleResolution": "node",
+    "allowSyntheticDefaultImports": true,
+    "esModuleInterop": true,
+    "jsx": "preserve",
     "resolveJsonModule": true,
-    "isolatedModules": true,
+    "jsxImportSource": "solid-js",
+    "types": ["chrome", "vite/client", "vite-plugin-solid-svg/types"],
+    "plugins": ["typescript-styled-plugin"],
     "noEmit": true,
-    "jsx": "react-jsx",
-    "noFallthroughCasesInSwitch": true
-  },
-  "include": [
-    "src"
-  ],
-  "exclude": [
-    "src/**/*.spec.tsx"
-  ]
+    "isolatedModules": true,
+    "paths": {
+      "@components/*": ["./src/components/*"],
+      "@stores/*": ["./src/store/*"],
+      "@utils/*": ["./src/utils/*"]
+    }
+  }
 }

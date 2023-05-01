@@ -1,28 +1,14 @@
-/* eslint-disable */
-import React from 'react';
-import ReactDOM from 'react-dom';
+/* @refresh reload */
+import { render } from 'solid-js/web';
+
 import App from './App';
-import reportWebVitals from './reportWebVitals';
-import './styles/index.scss';
 
-document.querySelector('.loading-progress')?.remove();
+const root = document.getElementById('root');
 
-if (process.env.NODE_ENV === 'development') {
-  const whyDidYouRender = require('@welldone-software/why-did-you-render');
-  const ReactRedux = require('react-redux');
-  whyDidYouRender(React, {
-    trackAllPureComponents: true,
-  });
+if (import.meta.env.DEV && !(root instanceof HTMLElement)) {
+  throw new Error(
+    'Root element not found. Did you forget to add it to your index.html? Or maybe the id attribute got mispelled?'
+  );
 }
 
-ReactDOM.render(
-  <React.StrictMode>
-    <App />
-  </React.StrictMode>,
-  document.getElementById('root'),
-);
-
-// If you want to start measuring performance in your app, pass a function
-// to log results (for example: reportWebVitals(console.log))
-// or send to an analytics endpoint. Learn more: https://bit.ly/CRA-vitals
-reportWebVitals();
+render(() => <App />, root!);

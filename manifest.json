@@ -1,0 +1,16 @@
+{
+  "manifest_version": 3,
+  "name": "New Tab Dashboard",
+  "description": "Everything you need at your fingertips!",
+  "version": "2.0.0",
+  "chrome_url_overrides": {
+    "newtab": "index.html"
+  },
+  "permissions": [
+    "storage",
+    "bookmarks",
+    "geolocation",
+    "identity",
+    "identity.email"
+  ]
+}

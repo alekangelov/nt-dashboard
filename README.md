@@ -1,36 +1,34 @@
-# Alek's New Tab Dashboard
+## Usage
 
-![Screenshot of the Dashboard](https://i.imgur.com/OPTGFGV.png)
+Those templates dependencies are maintained via [pnpm](https://pnpm.io) via `pnpm up -Lri`.
 
-So, this is a project I've been wanting to do for a while, but never really got
-the time to do it. Well, I decided to make time and to do and open source.
-Plenty of things left to do, but I made some architectural decisions that should
-make everything easy to implement.
-
-## Architecture
-
-Uses Redux and a persistent storage solution with rehydration, custom modal
-solution, custom "design system" (if you can call it that lmao).
-
-## How to develop
-
-Run:
+This is the reason you see a `pnpm-lock.yaml`. That being said, any package manager will work. This file can be safely be removed once you clone a template.
 
 ```bash
-yarn
-yarn dev
+$ npm install # or pnpm install or yarn install
 ```
 
-```bash
-npm i
-npm run dev
-```
+### Learn more on the [Solid Website](https://solidjs.com) and come chat with us on our [Discord](https://discord.com/invite/solidjs)
 
-and put the `build` folder in your chrome extensions as an unpacked extension.
+## Available Scripts
 
-## Future
+In the project directory, you can run:
 
-I plan on releasing this as a full on extension, just gotta figure out what
-people want to put in here. If you have something, open issues or contact me.
+### `npm dev` or `npm start`
 
-Copyright 2021 Alek Angelov
+Runs the app in the development mode.<br>
+Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+
+The page will reload if you make edits.<br>
+
+### `npm run build`
+
+Builds the app for production to the `dist` folder.<br>
+It correctly bundles Solid in production mode and optimizes the build for the best performance.
+
+The build is minified and the filenames include the hashes.<br>
+Your app is ready to be deployed!
+
+## Deployment
+
+You can deploy the `dist` folder to any static host provider (netlify, surge, now, etc.)
