@@ -1,5 +1,5 @@
-import { createSignal, createRoot } from 'solid-js';
-
+import { createRoot } from 'solid-js';
+import { createStore } from 'solid-js/store';
 export type App = 'settings' | 'todos' | 'bookmarks';
 export type Rect = {
   top: number;
@@ -8,42 +8,68 @@ export type Rect = {
   height: number;
 };
 type Window = {
-  rect: Rect;
+  rect?: Rect;
+  state?: 'minimized' | 'maximized' | 'normal';
 };
 type WindowStore = Partial<{
   [key in App]: Window;
 }>;
 
 function createWindows() {
-  const [windows, setWindows] = createSignal<WindowStore>({});
+  const [windows, setWindows] = createStore<WindowStore>({
+    settings: {},
+    todos: {},
+    bookmarks: {},
+  });
   const changeWindow = (app: App, rect: Window['rect']) => {
-    setWindows((prev) => {
-      if (!prev[app]) prev[app] = { rect };
-      prev[app] = { rect };
-      return { ...prev };
+    setWindows(app, (prev: Window) => {
+      return {
+        rect: {
+          ...prev?.rect,
+          ...rect,
+        },
+      };
     });
   };
   const closeWindow = (app: App) => {
-    setWindows((prev) => {
-      prev[app] = undefined;
-      return { ...prev };
+    setWindows(app, () => {
+      return undefined;
     });
   };
-  const openWindow = (app?: App | string) => {
+  const openWindow = (app?: App) => {
     if (!app) return;
-    setWindows((prev) => {
-      const addition = Object.values(prev).length * 16;
-      const width = 512;
-      const height = 600;
+    setWindows(app, (prev) => {
+      if (prev?.state === 'minimized') {
+        return { ...prev, state: 'normal' };
+      }
+      if (prev?.state === 'normal' || prev?.state === 'maximized') {
+        return { ...prev, state: 'minimized' };
+      }
+      const addition = 0;
+      const width = window.innerWidth / 2;
+      const height = window.innerHeight / 2;
       const top = window.innerHeight / 2 - height / 2 + addition;
       const left = window.innerWidth / 2 - width / 2 + addition;
       const rect = { top, left, width, height };
-      prev[app as App] = { rect };
-      console.log(prev);
-      return { ...prev };
+      return { rect, state: 'normal' };
     });
   };
-  return { windows, setWindows, changeWindow, closeWindow, openWindow };
+  const changeState = (app: App, state: Window['state']) => {
+    setWindows(app, (prev) => {
+      return {
+        ...prev,
+        state,
+      };
+    });
+  };
+  return {
+    windows,
+    setWindows,
+    changeWindow,
+    closeWindow,
+    openWindow,
+    changeState,
+  };
 }
 
 export default createRoot(createWindows);

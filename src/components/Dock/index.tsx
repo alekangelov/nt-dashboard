@@ -19,11 +19,12 @@ function DockIcon(
   const { openWindow, windows } = useWindows;
   const isOpen = createMemo(() => {
     return Boolean(
-      props.type === 'app' && props.id && windows()[props.id as App]
+      props.type === 'app' && props.id && windows[props.id as App]?.state
     );
   });
   css`
     .wrapper {
+      position: relative;
       cursor: pointer;
       background: linear-gradient(
         to bottom right,
@@ -37,11 +38,29 @@ function DockIcon(
       width: calc(48px * ${props.scale || '1'});
       height: calc(48px * ${props.scale || '1'});
       transition: height 0.2s ${anim}, width 0.2s ${anim},
-        font-size 0.2s ${anim};
+        font-size 0.2s ${anim}, transform 0.2s ${anim};
       color: white;
       font-size: calc(24px * ${props.scale || '1'});
       border: 1px solid rgba(var(--color-surface), 0.2);
       aspect-ratio: 1 / 1;
+      &:before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: white;
+        transition: opacity 0.2s ${anim};
+        opacity: 0;
+        border-radius: 16px;
+      }
+      &:active {
+        &:before {
+          opacity: 0.2;
+          transition: 0s;
+        }
+      }
     }
     .separator {
       height: 16px;
@@ -50,7 +69,7 @@ function DockIcon(
     }
     .indicator {
       position: absolute;
-      bottom: 8px;
+      bottom: -8px;
       height: 4px;
       width: 4px;
       border-radius: 50%;
@@ -73,7 +92,7 @@ function DockIcon(
         {...trigger}
         onClick={() => {
           if (props.type !== 'app') return;
-          openWindow(props.id);
+          openWindow(props.id as App);
         }}
         onMouseEnter={(e) => {
           props.onOver?.();

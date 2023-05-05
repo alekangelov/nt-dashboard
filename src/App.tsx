@@ -1,4 +1,4 @@
-import { Component, For } from 'solid-js';
+import { Component, createMemo, For } from 'solid-js';
 import { useAssets } from 'solid-js/web';
 import { StyleRegistry, css, renderSheets } from 'solid-styled';
 import { Dock } from '@components/Dock';
@@ -48,6 +48,10 @@ const App: Component = () => {
     }
   `;
   const { windows } = useWindows;
+  const apps = createMemo(() => {
+    console.log(windows);
+    return Object.entries(windows);
+  });
   return (
     <main>
       <StyleRegistry styles={sheets}>
@@ -56,8 +60,14 @@ const App: Component = () => {
         <Clock />
         <GDock />
 
-        <For each={Object.entries(windows())}>
-          {([app, props]) => <Window type={app as Xapp} rect={props.rect} />}
+        <For each={apps()}>
+          {([app, props]) => (
+            <Window
+              state={props?.state}
+              type={app as Xapp}
+              rect={props?.rect}
+            />
+          )}
         </For>
       </StyleRegistry>
     </main>

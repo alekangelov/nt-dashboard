@@ -578,6 +578,23 @@
     estree-walker "^2.0.2"
     picomatch "^2.3.1"
 
+"@solid-primitives/refs@^1.0.1":
+  version "1.0.2"
+  resolved "https://registry.yarnpkg.com/@solid-primitives/refs/-/refs-1.0.2.tgz#94dc4b89522fb64b98d73837985ef7c69336fee1"
+  integrity sha512-qnqQRdYbsENlVx86QCfftRKGZ/9zUJMGK9U85xDRymocEyeUXxdxgq0FeyGhvgg4A25spJVwHmuZUGY0aMBBLA==
+  dependencies:
+    "@solid-primitives/utils" "^6.0.0"
+
+"@solid-primitives/transition-group@^1.0.1":
+  version "1.0.2"
+  resolved "https://registry.yarnpkg.com/@solid-primitives/transition-group/-/transition-group-1.0.2.tgz#d16233f236c1450a980600d8e0870ef2651e2afc"
+  integrity sha512-+o3J7TnU0/Sok+LKA0z0wvhim88dpd2eFBk8/05adE6wVypVlME8sKqTMO+xRv8HoT4Kq3sczmvwV07FKg2n+g==
+
+"@solid-primitives/utils@^6.0.0":
+  version "6.1.0"
+  resolved "https://registry.yarnpkg.com/@solid-primitives/utils/-/utils-6.1.0.tgz#4814debe3add6092226a0443cdd252747c2070d9"
+  integrity sha512-uTikKFrq33UO+MnKt2WzZr9WYbQe5YX58ytGkL+29DL6o0pZs1wrICbd4ymzSm8azqzMcQqEQOL3HLWjuv9tLw==
+
 "@trysound/sax@0.2.0":
   version "0.2.0"
   resolved "https://registry.yarnpkg.com/@trysound/sax/-/sax-0.2.0.tgz#cccaab758af56761eb7bf37af6f03f326dd798ad"
@@ -1160,6 +1177,11 @@ csstype@^3.1.0:
   version "3.1.2"
   resolved "https://registry.yarnpkg.com/csstype/-/csstype-3.1.2.tgz#1d4bf9d572f11c14031f0436e1c10bc1f571f50b"
   integrity sha512-I7K1Uu0MBPzaFKg4nI5Q7Vs2t+3gWWW648spaF+Rg7pI9ds18Ugn+lvg4SHczUdKlHI5LWBXyqfS8+DufyBsgQ==
+
+dayjs@^1.11.7:
+  version "1.11.7"
+  resolved "https://registry.yarnpkg.com/dayjs/-/dayjs-1.11.7.tgz#4b296922642f70999544d1144a2c25730fce63e2"
+  integrity sha512-+Yw9U6YO5TQohxLcIkrXBeY73WP3ejHWVvx8XCk3gxvQDCTEmS48ZrSZCKciI7Bhl/uCMyxYtE9UqRILmFphkQ==
 
 debug@^2.0.0:
   version "2.6.9"
@@ -2769,6 +2791,14 @@ solid-styled@^0.8.2:
     postcss "^8.4.21"
     postcss-nested "^6.0.1"
     postcss-safe-parser "^6.0.0"
+
+solid-transition-group@^0.2.2:
+  version "0.2.2"
+  resolved "https://registry.yarnpkg.com/solid-transition-group/-/solid-transition-group-0.2.2.tgz#a38e8d4e0ae19dcb67ac24355d8d2f82b2b3ea2d"
+  integrity sha512-6nB90UM2PB6VsIo/UCkmZmlIJb9mnmP7QPGrePqQJWtpUiRs5PbhkB8fvdyv9g/RPHWYpdJhQgxL6n++WmTt5A==
+  dependencies:
+    "@solid-primitives/refs" "^1.0.1"
+    "@solid-primitives/transition-group" "^1.0.1"
 
 source-map-js@^1.0.1, source-map-js@^1.0.2:
   version "1.0.2"
