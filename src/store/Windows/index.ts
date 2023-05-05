@@ -1,6 +1,7 @@
 import { createRoot } from 'solid-js';
 import { createStore } from 'solid-js/store';
-export type App = 'settings' | 'todos' | 'bookmarks';
+const apps = ['settings', 'todos', 'bookmarks'] as const;
+export type App = (typeof apps)[number];
 export type Rect = {
   top: number;
   left: number;
@@ -15,19 +16,36 @@ type WindowStore = Partial<{
   [key in App]: Window;
 }>;
 
+const createRectCache = () => {
+  const cache: Partial<Record<App, Rect>> = {};
+  const cacheFromStorage = localStorage.getItem('rect-cache');
+  if (cacheFromStorage) {
+    try {
+      const maybeCache = JSON.parse(cacheFromStorage) as Record<App, Rect>;
+      if (maybeCache) {
+        for (const [key, value] of Object.entries(maybeCache)) {
+          cache[key as App] = value;
+        }
+      }
+    } finally {
+    }
+  }
+  return {
+    cache,
+    save: (newCache: Partial<Record<App, Rect>>) =>
+      localStorage.setItem('rect-cache', JSON.stringify(newCache)),
+  };
+};
+
 function createWindows() {
-  const [windows, setWindows] = createStore<WindowStore>({
-    settings: {},
-    todos: {},
-    bookmarks: {},
-  });
+  const { cache, save } = createRectCache();
+  const [windows, setWindows] = createStore<WindowStore>({});
   const changeWindow = (app: App, rect: Window['rect']) => {
-    setWindows(app, (prev: Window) => {
+    setWindows(app, (prev) => {
+      save({ ...cache, [app]: rect });
       return {
-        rect: {
-          ...prev?.rect,
-          ...rect,
-        },
+        ...prev,
+        rect,
       };
     });
   };
@@ -45,12 +63,14 @@ function createWindows() {
       if (prev?.state === 'normal' || prev?.state === 'maximized') {
         return { ...prev, state: 'minimized' };
       }
-      const addition = 0;
-      const width = window.innerWidth / 2;
-      const height = window.innerHeight / 2;
-      const top = window.innerHeight / 2 - height / 2 + addition;
-      const left = window.innerWidth / 2 - width / 2 + addition;
-      const rect = { top, left, width, height };
+      let rect = cache[app];
+      if (!rect) {
+        const height = 400;
+        const width = 600;
+        const top = window.innerHeight / 2 - height / 2;
+        const left = window.innerWidth / 2 - width / 2;
+        rect = { top, left, width, height };
+      }
       return { rect, state: 'normal' };
     });
   };

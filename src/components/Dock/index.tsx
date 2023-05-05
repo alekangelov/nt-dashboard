@@ -1,8 +1,9 @@
-import { createEffect, createMemo, createSignal, For, JSX } from 'solid-js';
+import { createMemo, createSignal, For, JSX } from 'solid-js';
 import { css } from 'solid-styled';
 import { FiList, FiSettings } from 'solid-icons/fi';
 import { createPopperHandles, Popper } from '..';
 import { App, useWindows } from '@stores/index';
+import { anim } from '@utils/index';
 interface DockIconProps {
   type: 'shortcut' | 'app' | 'separator';
   id?: string;
@@ -11,7 +12,6 @@ interface DockIconProps {
   href?: string;
 }
 
-const anim = 'cubic-bezier(0.22, 0.61, 0.36, 1)';
 function DockIcon(
   props: DockIconProps & { scale?: string; onOver?: VoidFunction }
 ) {

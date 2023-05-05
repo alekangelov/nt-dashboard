@@ -21,3 +21,5 @@ export const lerp = (
 ) => {
   return ((num - inMin) * (outmax - outMin)) / (inMax - inMin) + outMin;
 };
+
+export const anim = 'cubic-bezier(0.22, 0.61, 0.36, 1)';
