@@ -19,7 +19,7 @@ function DockIcon(
   const { openWindow, windows } = useWindows;
   const isOpen = createMemo(() => {
     return Boolean(
-      props.type === 'app' && props.id && windows[props.id as App]?.state
+      props.type === 'app' && props.id && windows[props.id as App]?.rect
     );
   });
   css`

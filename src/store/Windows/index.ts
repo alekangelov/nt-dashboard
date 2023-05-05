@@ -10,7 +10,8 @@ export type Rect = {
 };
 type Window = {
   rect?: Rect;
-  state?: 'minimized' | 'maximized' | 'normal';
+  maximized?: boolean;
+  minimized?: boolean;
 };
 type WindowStore = Partial<{
   [key in App]: Window;
@@ -57,12 +58,8 @@ function createWindows() {
   const openWindow = (app?: App) => {
     if (!app) return;
     setWindows(app, (prev) => {
-      if (prev?.state === 'minimized') {
-        return { ...prev, state: 'normal' };
-      }
-      if (prev?.state === 'normal' || prev?.state === 'maximized') {
-        return { ...prev, state: 'minimized' };
-      }
+      if (prev?.minimized) return { ...prev, minimized: false };
+
       let rect = cache[app];
       if (!rect) {
         const height = 400;
@@ -74,21 +71,24 @@ function createWindows() {
       return { rect, state: 'normal' };
     });
   };
-  const changeState = (app: App, state: Window['state']) => {
+
+  const toggleState = (app: App, state: 'minimized' | 'maximized') => {
     setWindows(app, (prev) => {
+      if (!prev) return prev;
       return {
         ...prev,
-        state,
+        [state]: !prev[state],
       };
     });
   };
+
   return {
     windows,
     setWindows,
     changeWindow,
     closeWindow,
     openWindow,
-    changeState,
+    toggleState,
   };
 }
 

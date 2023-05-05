@@ -1,36 +1,53 @@
 import { useWindows } from '@stores/index';
 import { App, Rect } from '@stores/Windows';
 import { anim } from '@utils/index';
-import { createEffect, onCleanup, onMount, Show } from 'solid-js';
+import { createEffect, createMemo, onCleanup, onMount, Show } from 'solid-js';
 import { css } from 'solid-styled';
 import { Transition } from 'solid-transition-group';
+import { AppWindows } from './windows';
 
 type P = {
   type: App;
   rect?: Rect;
-  state?: 'minimized' | 'maximized' | 'normal';
-};
-
-const getIsOpen = (state?: 'minimized' | 'maximized' | 'normal') => {
-  return Boolean(state && state !== 'minimized');
+  minimized?: boolean;
+  maximized?: boolean;
 };
 
 export function Window(props: P) {
   let down = false;
   let resize = false;
-  const { changeWindow, changeState, closeWindow } = useWindows;
+  const { changeWindow, toggleState, closeWindow } = useWindows;
+  const size = createMemo(() => {
+    if (props.maximized) {
+      return {
+        radius: '0px',
+        top: '0px',
+        left: '0px',
+        width: '100%',
+        height: '100%',
+      };
+    }
+    return {
+      radius: '16px',
+      top: `${props.rect?.top}px`,
+      left: `${props.rect?.left}px`,
+      width: `${props.rect?.width}px`,
+      height: `${props.rect?.height}px`,
+    };
+  });
   css`
     .wrapper {
       background: rgba(var(--color-surface), 0.25);
       position: fixed;
-      top: ${`${props.rect?.top}px`};
-      left: ${`${props.rect?.left}px`};
-      width: ${`${props.rect?.width}px`};
-      height: ${`${props.rect?.height}px`};
+      top: ${size().top};
+      left: ${size().left};
+      width: ${size().width}
+      height: ${size().height};
       box-shadow: 0px 24px 100px -50px rgba(0, 0, 0, 0.25);
       backdrop-filter: blur(16px);
-      border-radius: 16px;
+      border-radius: ${size().radius};
       user-select: none;
+        overflow: hidden;
     }
     .resize {
       position: absolute;
@@ -57,6 +74,7 @@ export function Window(props: P) {
         outline: none;
         cursor: pointer;
         transition: filter 0.2s ${anim};
+        box-shadow: 0px 0px 10px rgba(0,0,0,0.2);
         &:hover {
           filter: brightness(1.2);
         }
@@ -73,13 +91,19 @@ export function Window(props: P) {
       .maximize {
         background: #27c93f;
       }
+
     }
+          .content {
+        height: 100%;
+      }
   `;
   const handleMouseUp = (e: MouseEvent) => {
     down = false;
     resize = false;
   };
   const handleMouseDown = (e: MouseEvent) => {
+    // make sure it's left click
+    if (e.button !== 0) return;
     down = true;
     if ((e.target as HTMLElement)?.closest('.resize')) {
       resize = true;
@@ -110,6 +134,7 @@ export function Window(props: P) {
       document.removeEventListener('mousemove', handleMouseMove);
     });
   });
+  const Elem = AppWindows[props.type];
   return (
     <Transition
       onEnter={(el, done) => {
@@ -139,13 +164,14 @@ export function Window(props: P) {
         a.finished.then(() => done());
       }}
     >
-      {getIsOpen(props.state) && (
+      {!props.minimized && (
         <div
           draggable
           class="wrapper"
           onMouseDown={handleMouseDown}
           onMouseUp={handleMouseUp}
         >
+          <div class="content">{Elem?.()} </div>
           <div role="presentation" class="resize" />
           <div class="actions">
             <button
@@ -153,14 +179,14 @@ export function Window(props: P) {
               role="button"
               type="button"
               class="minimize"
-              onClick={() => changeState(props.type, 'minimized')}
+              onClick={() => toggleState(props.type, 'minimized')}
             />
             <button
               aria-label="Maximize window"
               role="button"
               type="button"
               class="maximize"
-              onClick={() => changeState(props.type, 'maximized')}
+              onClick={() => toggleState(props.type, 'maximized')}
             />
             <button
               aria-label="Close window"

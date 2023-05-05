@@ -6,7 +6,10 @@
     "start": "vite",
     "dev": "vite",
     "build": "vite build",
-    "serve": "vite preview"
+    "serve": "vite preview",
+    "lint": "eslint --ext .ts,.tsx src",
+    "lint:fix": "eslint --fix --ext .ts,.tsx src",
+    "format": "prettier --write \"src/**/*.{ts,tsx}\""
   },
   "license": "MIT",
   "type": "module",
@@ -19,6 +22,7 @@
     "eslint-config-airbnb-base": "^15.0.0",
     "eslint-config-airbnb-typescript": "^17.0.0",
     "eslint-config-prettier": "^8.8.0",
+    "eslint-plugin-import": "^2.27.5",
     "eslint-plugin-prettier": "^4.2.1",
     "eslint-plugin-solid": "^0.12.1",
     "postcss": "^8.4.23",
@@ -38,6 +42,7 @@
     "solid-js": "^1.6.10",
     "solid-spring": "^0.0.7",
     "solid-styled": "^0.8.2",
-    "solid-transition-group": "^0.2.2"
+    "solid-transition-group": "^0.2.2",
+    "string-to-color": "^2.2.2"
   }
 }

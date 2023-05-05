@@ -27,6 +27,7 @@ const GlobalStyles = () => {
       :root {
         --color-surface: 254, 254, 254;
         --color-on-surface: 0, 0, 0;
+        --color-accent: 0, 139, 255;
       }
       * {
         box-sizing: border-box;
@@ -63,9 +64,10 @@ const App: Component = () => {
         <For each={apps()}>
           {([app, props]) => (
             <Window
-              state={props?.state}
               type={app as Xapp}
               rect={props?.rect}
+              maximized={props?.maximized}
+              minimized={props?.minimized}
             />
           )}
         </For>
