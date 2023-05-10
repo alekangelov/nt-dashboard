@@ -1,7 +1,9 @@
+import { Input } from '@components/ui';
 import { Avatar } from '@components/ui';
+import { useSettings } from '@stores/settings';
 import { anim } from '@utils/index';
 import { createTabber } from '@utils/tabber';
-import { JSX } from 'solid-js';
+import { createMemo, JSX } from 'solid-js';
 import { css } from 'solid-styled';
 import { Transition } from 'solid-transition-group';
 
@@ -65,7 +67,7 @@ const DefaultTab = (props: { leading?: JSX.Element; id?: Tab }) => {
         {props.leading}
       </span>
       <span rel="title" class="title">
-        {props.id ? tabTitles[props.id] : ''}
+        {props.id ? (tabTitles[props.id] as any) : ''}
       </span>
     </div>
   );
@@ -78,6 +80,37 @@ const emojis: Record<Tab, string> = {
   about: '📄',
 };
 
+const tabPanels: Partial<Record<Tab, () => JSX.Element>> = {
+  user: () => {
+    const [settings, _setSettings] = useSettings;
+    const user = createMemo(() => {
+      return settings().user;
+    });
+    css`
+      .profile {
+        display: flex;
+        align-items: center;
+        gap: 12px;
+
+        border-radius: 24px;
+        padding: 24px;
+        background: rgba(var(--color-on-surface), 0.05);
+      }
+    `;
+    return (
+      <div>
+        <div class="profile">
+          <Avatar size="xl" src={user()?.avatar} name={user()?.name} />
+          <span>{user()?.name || '@unknown'}</span>
+        </div>
+        <form>
+          <Input type="email" id="email" label="Email" name="email" />
+        </form>
+      </div>
+    );
+  },
+};
+
 const tabTabs: Partial<Record<Tab, () => JSX.Element>> = {
   user: UserTab,
   general: () => <DefaultTab leading={emojis['general']} id="general" />,
@@ -87,6 +120,7 @@ const tabTabs: Partial<Record<Tab, () => JSX.Element>> = {
   shortcuts: () => <DefaultTab leading={emojis['shortcuts']} id="shortcuts" />,
   about: () => <DefaultTab leading={emojis['about']} id="about" />,
 };
+
 function Settings() {
   const { Tabs, Panel } = createTabber(arrToId(tabs));
   css`
@@ -161,7 +195,9 @@ function Settings() {
                   <h2>
                     {emojis[props.id]} {tabTitles[props.id]}
                   </h2>
-                  {props.id}
+                  <div class="content">
+                    {tabPanels[props.id] ? tabPanels[props.id]() : null}
+                  </div>
                 </div>
               )}
             </Transition>

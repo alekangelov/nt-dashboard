@@ -137,14 +137,15 @@ export function Window(props: P) {
   const Elem = AppWindows[props.type];
   return (
     <Transition
+      use:solid-styled
       onEnter={(el, done) => {
         const a = el.animate(
           [
-            { transform: 'scale(0)', opacity: 1 },
-            { transform: 'scale(1)', opacity: 1 },
+            { transform: 'scale(0.8) transform(0%,-10%)', opacity: 1 },
+            { transform: 'scale(1) transform(0%,0%)', opacity: 1 },
           ],
           {
-            duration: 200,
+            duration: 0,
             easing: 'cubic-bezier(0.4, 0, 0.2, 1)',
           }
         );
@@ -153,11 +154,11 @@ export function Window(props: P) {
       onExit={(el, done) => {
         const a = el.animate(
           [
-            { transform: 'scale(1)', opacity: 1 },
-            { transform: 'scale(0)', opacity: 1 },
+            { transform: 'scale(1) transform(0%,0%)', opacity: 1 },
+            { transform: 'scale(0.8) transform(0%,-100%)', opacity: 0 },
           ],
           {
-            duration: 200,
+            duration: 0,
             easing: 'cubic-bezier(0.4, 0, 0.2, 1)',
           }
         );

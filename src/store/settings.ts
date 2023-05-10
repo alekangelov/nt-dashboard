@@ -1,6 +1,5 @@
 import { createStoredSignal } from '@utils/stored';
-import { createRoot } from 'solid-js';
-
+import { Accessor, createRoot, onMount, Setter } from 'solid-js';
 export interface ShortCut {
   url: string;
   title?: string;
@@ -20,14 +19,42 @@ export interface Settings {
   };
 }
 
-function createSettings() {
-  return createStoredSignal<Settings>(
+const getUsernameFromEmail = (email: string) => {
+  return email.split('@')[0];
+};
+
+const getEmailFromChrome = async () => {
+  return new Promise<chrome.identity.UserInfo>((resolve) => {
+    chrome.identity.getProfileUserInfo((info) => {
+      resolve(info);
+    });
+  });
+};
+
+function createSettings(): [Accessor<Settings>, Setter<Settings>] {
+  const [settings, setSettings] = createStoredSignal<Settings>(
     {
       shortcuts: [],
       search: { engine: 'Google' },
     },
     'settings'
   );
+  onMount(() => {
+    if (!settings().user) {
+      getEmailFromChrome().then((info) => {
+        setSettings((prev) => ({
+          ...prev,
+          user: {
+            ...prev.user,
+            avatar: prev.user?.avatar ?? '',
+            email: info.email ?? '',
+            name: getUsernameFromEmail(info.email) ?? '',
+          },
+        }));
+      });
+    }
+  });
+  return [settings, setSettings];
 }
 
 export const useSettings = createRoot(createSettings);
