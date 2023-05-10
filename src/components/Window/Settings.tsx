@@ -14,7 +14,7 @@ const tabs = ['user', 'general', 'appearence', 'shortcuts', 'about'];
 
 type Tab = (typeof tabs)[number];
 
-const tabTitles = {
+const tabTitles: Record<Tab, string> = {
   user: 'User',
   general: 'General',
   appearence: 'Appearence',
@@ -63,12 +63,10 @@ const DefaultTab = (props: { leading?: JSX.Element; id?: Tab }) => {
   `;
   return (
     <div class="wrapper">
-      <span rel="icon" class="icon">
+      <span role="img" class="icon">
         {props.leading}
       </span>
-      <span rel="title" class="title">
-        {props.id ? (tabTitles[props.id] as any) : ''}
-      </span>
+      <span class="title">{props.id ? tabTitles[props.id] : ''}</span>
     </div>
   );
 };
