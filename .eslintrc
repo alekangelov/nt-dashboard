@@ -16,5 +16,11 @@
   "parserOptions": {
     "project": ["./tsconfig.json"]
   },
-  "plugins": ["@typescript-eslint", "solid"]
+  "plugins": ["@typescript-eslint", "solid"],
+  "rules": {
+    "@typescript-eslint/no-unused-expressions": "off",
+    "import/prefer-default-export": 0,
+    "no-return-assign": 0,
+    "no-void": 0
+  }
 }

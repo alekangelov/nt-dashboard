@@ -10,8 +10,11 @@
     "resolveJsonModule": true,
     "jsxImportSource": "solid-js",
     "types": ["chrome", "vite/client", "vite-plugin-solid-svg/types"],
-    "plugins": ["typescript-styled-plugin"],
-
+    "plugins": [
+      {
+        "name": "typescript-styled-plugin"
+      }
+    ],
     "noEmit": true,
     "isolatedModules": true,
     "paths": {

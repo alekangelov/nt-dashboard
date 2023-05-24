@@ -1,11 +1,11 @@
-import { Input } from '@components/ui';
-import { Avatar } from '@components/ui';
+import { Input, Avatar, Button } from '@components/ui';
 import { useSettings } from '@stores/settings';
 import { anim } from '@utils/index';
 import { createTabber } from '@utils/tabber';
-import { createMemo, JSX } from 'solid-js';
+import { createMemo, createSignal, JSX } from 'solid-js';
 import { css } from 'solid-styled';
 import { Transition } from 'solid-transition-group';
+import { About } from './About';
 
 const arrToId = <T extends string[]>(arr: T) =>
   arr.map((e) => ({ id: e })) as { id: string }[];
@@ -23,6 +23,7 @@ const tabTitles: Record<Tab, string> = {
 };
 
 const UserTab = () => {
+  const [settings] = useSettings;
   css`
     .wrapper {
       display: flex;
@@ -38,8 +39,12 @@ const UserTab = () => {
   `;
   return (
     <div class="wrapper">
-      <Avatar name="" size="lg" />
-      <span>Username</span>
+      <Avatar
+        name={settings().user?.name}
+        src={settings().user?.avatar}
+        size="lg"
+      />
+      <span>{settings().user?.name}</span>
     </div>
   );
 };
@@ -80,7 +85,8 @@ const emojis: Record<Tab, string> = {
 
 const tabPanels: Partial<Record<Tab, () => JSX.Element>> = {
   user: () => {
-    const [settings, _setSettings] = useSettings;
+    const [settings, setSettings] = useSettings;
+    const [loading, setLoading] = createSignal(false);
     const user = createMemo(() => {
       return settings().user;
     });
@@ -95,28 +101,87 @@ const tabPanels: Partial<Record<Tab, () => JSX.Element>> = {
         background: rgba(var(--color-on-surface), 0.05);
       }
     `;
+    const [blob, setBlob] = createSignal<string | null>(null);
+    let fileRef: HTMLInputElement;
     return (
       <div>
-        <div class="profile">
-          <Avatar size="xl" src={user()?.avatar} name={user()?.name} />
-          <span>{user()?.name || '@unknown'}</span>
-        </div>
-        <form>
-          <Input type="email" id="email" label="Email" name="email" />
+        <form
+          onSubmit={(e) => {
+            e.preventDefault();
+            setLoading(true);
+            const data = new FormData(e.target as HTMLFormElement);
+            const obj = Object.fromEntries(data.entries()) as {
+              avatar: File;
+              username: string;
+              email: string;
+            };
+            setSettings((prev) => ({
+              ...prev,
+              user: {
+                email: obj.email,
+                name: obj.username.trim(),
+                avatar: blob() ?? prev.user?.avatar ?? '',
+              },
+            }));
+            setLoading(false);
+          }}
+        >
+          <div class="profile">
+            <Avatar
+              size="xl"
+              src={blob() ?? user()?.avatar}
+              name={user()?.name}
+              onClick={() => {
+                fileRef.click();
+              }}
+            />
+            <input
+              ref={(e) => (fileRef = e)}
+              style={{ display: 'none' }}
+              type="file"
+              name="avatar"
+              onChange={(e) => {
+                if (!e.target.files) return;
+                const file = e.target.files[0];
+                const reader = new FileReader();
+                reader.readAsDataURL(file);
+                reader.onload = () => {
+                  setBlob(reader.result as string);
+                };
+              }}
+            />
+            <span>{user()?.name ?? '@unknown'}</span>
+          </div>
+          <Input
+            initialValue={user()?.name}
+            type="text"
+            id="username"
+            label="What would you like to be called?"
+            name="username"
+          />
+          <Input
+            initialValue={user()?.email}
+            type="text"
+            id="emal"
+            label="What is your email?"
+            name="email"
+          />
+          <Button mt type="submit" loading={loading()}>
+            Save
+          </Button>
         </form>
       </div>
     );
   },
+  about: About,
 };
 
 const tabTabs: Partial<Record<Tab, () => JSX.Element>> = {
   user: UserTab,
-  general: () => <DefaultTab leading={emojis['general']} id="general" />,
-  appearence: () => (
-    <DefaultTab leading={emojis['appearence']} id="appearence" />
-  ),
-  shortcuts: () => <DefaultTab leading={emojis['shortcuts']} id="shortcuts" />,
-  about: () => <DefaultTab leading={emojis['about']} id="about" />,
+  general: () => <DefaultTab leading={emojis.general} id="general" />,
+  appearence: () => <DefaultTab leading={emojis.appearence} id="appearence" />,
+  shortcuts: () => <DefaultTab leading={emojis.shortcuts} id="shortcuts" />,
+  about: () => <DefaultTab leading={emojis.about} id="about" />,
 };
 
 function Settings() {

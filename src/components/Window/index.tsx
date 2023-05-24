@@ -1,3 +1,4 @@
+/* eslint-disable solid/reactivity */
 import { useWindows } from '@stores/index';
 import { App, Rect } from '@stores/Windows';
 import { anim } from '@utils/index';
@@ -29,10 +30,10 @@ export function Window(props: P) {
     }
     return {
       radius: '16px',
-      top: `${props.rect?.top}px`,
-      left: `${props.rect?.left}px`,
-      width: `${props.rect?.width}px`,
-      height: `${props.rect?.height}px`,
+      top: `${props.rect?.top ?? 0}px`,
+      left: `${props.rect?.left ?? 0}px`,
+      width: `${props.rect?.width ?? 0}px`,
+      height: `${props.rect?.height ?? 0}px`,
     };
   });
   css`
@@ -113,12 +114,13 @@ export function Window(props: P) {
     if (!down || !props.rect) return;
     const { movementX, movementY } = e;
     if (resize) {
-      return changeWindow(props.type, {
+      changeWindow(props.type, {
         ...props.rect,
         width: props.rect.width + movementX,
 
         height: props.rect.height + movementY,
       });
+      return;
     }
     changeWindow(props.type, {
       ...props.rect,
@@ -149,7 +151,7 @@ export function Window(props: P) {
             easing: 'cubic-bezier(0.4, 0, 0.2, 1)',
           }
         );
-        a.finished.then(() => done());
+        void a.finished.then(() => done());
       }}
       onExit={(el, done) => {
         const a = el.animate(
@@ -162,7 +164,7 @@ export function Window(props: P) {
             easing: 'cubic-bezier(0.4, 0, 0.2, 1)',
           }
         );
-        a.finished.then(() => done());
+        void a.finished.then(() => done());
       }}
     >
       {!props.minimized && (
